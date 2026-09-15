@@ -64,19 +64,21 @@
         #continue-button { margin-top: 20px !important; font-size: 1.3em !important; cursor: pointer; }
         .char-select-btn { font-size: 1.2em; text-align: center; width: 45%; } .char-male { background-color: var(--bleu); } .char-female { background-color: #C2185B; box-shadow: 0 4px #880E4F; }
         @media (max-width: 700px) {
-  body { padding: 4px; }
-  #game-container { padding: 8px; border-radius: 10px; }
-  #game-title { font-size: 1.3em; margin-bottom: 3px; }
-  #score-box { font-size: 0.85em; margin-bottom: 3px; }
-  #pillars-container { margin-bottom: 6px; padding: 4px; }
-  .bar-label { font-size: 0.68em; }
-  .bar { height: 10px; }
-  #game-play-area { display: flex; flex-direction: column; }
-  #question-box { order: -1; font-size: 0.88em; padding: 8px 10px; min-height: 48px; margin-bottom: 6px; margin-top: 0; }
-  #main-content { flex-direction: column; gap: 6px; flex-grow: 1; align-items: center; }
-  #portrait-container { width: 85px; height: 85px; order: 1; margin: 0 auto 2px; flex-shrink: 0; }
-  .answer-side { width: 100%; order: 2; flex-direction: row; flex-wrap: wrap; gap: 6px; justify-content: center; }
-  .answer-button { width: 100%; font-size: 0.95em; padding: 13px 10px; box-shadow: 0 2px #000; }
+  body { padding: 4px; height: 100vh; overflow: hidden; }
+  #game-container { height: calc(100vh - 8px); padding: 8px; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; }
+  #game-title { font-size: 1.1em; margin-bottom: 1px; flex-shrink: 0; }
+  #score-box { font-size: 0.72em; margin-bottom: 1px; flex-shrink: 0; }
+  #pillars-container { margin-bottom: 3px; padding: 3px; flex-shrink: 0; }
+  .bar-label { font-size: 0.58em; }
+  .bar { height: 7px; }
+  #game-play-area { flex-grow: 1; display: flex; flex-direction: column; min-height: 0; gap: 4px; overflow: hidden; justify-content: flex-start; }
+  #question-box { order: -1; font-size: 0.85em; padding: 7px 10px; flex-shrink: 0; border-radius: 8px; margin: 0; }
+  #main-content { flex-grow: 1; min-height: 0; display: grid; grid-template-areas: "portrait portrait" "left right"; grid-template-rows: 80px 1fr; grid-template-columns: 1fr 1fr; gap: 6px; }
+  #portrait-container { grid-area: portrait; width: 80px; height: 80px; justify-self: center; align-self: center; border: 2px solid var(--or); border-radius: 8px; overflow: hidden; background: none; box-shadow: none; padding: 0; }
+  #student-portrait { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+  #left-answers { grid-area: left; display: flex; flex-direction: column; gap: 5px; min-height: 0; }
+  #right-answers { grid-area: right; display: flex; flex-direction: column; gap: 5px; min-height: 0; }
+  .answer-button { flex: 1; font-size: 0.82em; padding: 6px 5px; box-shadow: 0 2px #000; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 0; width: 100%; }
   #abandon-button { bottom: 8px; left: 8px; padding: 7px 10px; font-size: 0.75em; }
   .sub-btn { width: 90%; }
   #feedback-message { font-size: 0.9em; padding: 12px; }
