@@ -68,6 +68,7 @@
   #game-play-area { justify-content: center !important; overflow: visible !important; }
   #question-box { order: 0 !important; min-height: 80px !important; }
   #main-content { display: flex !important; flex-direction: row !important; align-items: center !important; flex: 1 !important; overflow: visible !important; gap: 10px !important; }
+  #abandon-button { top: 8px !important; bottom: auto !important; }
   #mobile-btn-row { display: contents !important; }
   #portrait-container { order: 0 !important; width: 28% !important; height: auto !important; background-color: #5D4037 !important; border: 3px solid var(--or) !important; padding: 4px !important; box-shadow: inset 0 0 15px #000 !important; align-self: auto !important; }
   #student-portrait { width: 100% !important; height: auto !important; object-fit: fill !important; border-radius: 8px !important; }
@@ -92,7 +93,7 @@
     </style>
 </head>
 <body>
-    <div id="signature-overlay">By M. Esposito · v10</div>
+    <div id="signature-overlay">By M. Esposito · v11</div>
     <div id="vignette-overlay"></div>
     <audio id="audio-menu" loop></audio><audio id="audio-tres-heureux" loop></audio><audio id="audio-heureux" loop></audio><audio id="audio-neutre" loop></audio><audio id="audio-inquiet" loop></audio><audio id="audio-desespere" loop></audio><audio id="audio-game-over" loop></audio><audio id="audio-bonus" loop></audio><audio id="sound-correct"></audio><audio id="sound-incorrect"></audio>
 
@@ -915,7 +916,7 @@
             mc.style.overflow = 'hidden';
             mc.style.gap = '4px';
             // portrait : small square, centered, fixed height
-            pc.style.cssText = 'width:80px;height:80px;flex-shrink:0;align-self:center;border:2px solid #FFD700;border-radius:8px;overflow:hidden;background:none;box-shadow:none;padding:0;';
+            pc.style.cssText = 'width:130px;height:130px;flex-shrink:0;align-self:center;border:2px solid #FFD700;border-radius:10px;overflow:hidden;background:none;box-shadow:none;padding:0;';
             document.getElementById('student-portrait').style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:6px;';
             // create a row that holds both answer columns side by side
             var row = document.createElement('div');
