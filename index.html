@@ -63,6 +63,18 @@
         #feedback-message { text-align: center; font-size: 1.1em; color: var(--parchemin); padding: 20px; border-radius: 5px; max-height: 60vh; overflow-y: auto; background-color: rgba(0, 0, 0, 0.6); border: 2px solid var(--or); width: 90%; max-width: 600px; }
         #continue-button { margin-top: 20px !important; font-size: 1.3em !important; cursor: pointer; }
         .char-select-btn { font-size: 1.2em; text-align: center; width: 45%; } .char-male { background-color: var(--bleu); } .char-female { background-color: #C2185B; box-shadow: 0 4px #880E4F; }
+        @media (min-width: 701px) {
+  /* Restaure le layout desktop si le JS mobile a restructuré le DOM */
+  #game-play-area { justify-content: center !important; overflow: visible !important; }
+  #question-box { order: 0 !important; min-height: 80px !important; }
+  #main-content { display: flex !important; flex-direction: row !important; align-items: center !important; flex: 1 !important; overflow: visible !important; gap: 10px !important; }
+  #mobile-btn-row { display: contents !important; }
+  #portrait-container { order: 0 !important; width: 28% !important; height: auto !important; background-color: #5D4037 !important; border: 3px solid var(--or) !important; padding: 4px !important; box-shadow: inset 0 0 15px #000 !important; align-self: auto !important; }
+  #student-portrait { width: 100% !important; height: auto !important; object-fit: fill !important; border-radius: 8px !important; }
+  #left-answers { order: -1 !important; flex-direction: column !important; flex: initial !important; width: 34% !important; min-width: 140px !important; min-height: initial !important; gap: 8px !important; justify-content: center !important; }
+  #right-answers { order: 1 !important; flex-direction: column !important; flex: initial !important; width: 34% !important; min-width: 140px !important; min-height: initial !important; gap: 8px !important; justify-content: center !important; }
+  .answer-button { flex: initial !important; min-height: initial !important; padding: 12px !important; font-size: 0.95em !important; }
+}
         @media (max-width: 700px) {
   body { margin: 0; padding: 4px; height: 100vh; overflow: hidden; box-sizing: border-box; }
   #game-container { height: calc(100vh - 8px); padding: 8px; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; }
@@ -72,7 +84,7 @@
   .bar-label { font-size: 0.58em; }
   .bar { height: 7px; }
   #question-box { min-height: 0 !important; font-size: 0.85em; padding: 7px 10px; border-radius: 8px; margin: 0; flex-shrink: 0; }
-  #mobile-btn-row .answer-button { flex: 1 !important; min-height: 0 !important; font-size: 0.8em; padding: 4px 5px; display: flex; align-items: center; justify-content: center; text-align: center; width: 100%; }
+  #mobile-btn-row .answer-button { flex: 1 !important; min-height: 0 !important; font-size: 1.25em; padding: 8px; display: flex; align-items: center; justify-content: center; text-align: center; width: 100%; }
   #abandon-button { bottom: 8px; left: 8px; padding: 7px 10px; font-size: 0.75em; }
   .sub-btn { width: 90%; }
   #feedback-message { font-size: 0.9em; padding: 12px; }
@@ -80,7 +92,7 @@
     </style>
 </head>
 <body>
-    <div id="signature-overlay">By M. Esposito · v8</div>
+    <div id="signature-overlay">By M. Esposito · v10</div>
     <div id="vignette-overlay"></div>
     <audio id="audio-menu" loop></audio><audio id="audio-tres-heureux" loop></audio><audio id="audio-heureux" loop></audio><audio id="audio-neutre" loop></audio><audio id="audio-inquiet" loop></audio><audio id="audio-desespere" loop></audio><audio id="audio-game-over" loop></audio><audio id="audio-bonus" loop></audio><audio id="sound-correct"></audio><audio id="sound-incorrect"></audio>
 
