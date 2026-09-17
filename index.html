@@ -64,21 +64,15 @@
         #continue-button { margin-top: 20px !important; font-size: 1.3em !important; cursor: pointer; }
         .char-select-btn { font-size: 1.2em; text-align: center; width: 45%; } .char-male { background-color: var(--bleu); } .char-female { background-color: #C2185B; box-shadow: 0 4px #880E4F; }
         @media (max-width: 700px) {
-  body { padding: 4px; height: 100vh; overflow: hidden; }
-  #game-container { height: calc(100vh - 8px); padding: 8px; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; }
+  body { margin: 0; padding: 4px; height: 100vh; overflow: hidden; box-sizing: border-box; }
+  #game-container { height: calc(100vh - 8px); padding: 8px; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; }
   #game-title { font-size: 1.1em; margin-bottom: 1px; flex-shrink: 0; }
   #score-box { font-size: 0.72em; margin-bottom: 1px; flex-shrink: 0; }
   #pillars-container { margin-bottom: 3px; padding: 3px; flex-shrink: 0; }
   .bar-label { font-size: 0.58em; }
   .bar { height: 7px; }
-  #game-play-area { flex-grow: 1; min-height: 0; display: flex; flex-direction: column; gap: 4px; overflow: hidden; justify-content: flex-start; }
-  #question-box { order: -1; font-size: 0.85em; padding: 7px 10px; flex-shrink: 0; border-radius: 8px; margin: 0; }
-  #main-content { overflow: hidden; display: grid !important; grid-template-areas: "portrait portrait" "left right"; grid-template-rows: 72px minmax(0, 1fr); grid-template-columns: 1fr 1fr; gap: 5px; }
-  #portrait-container { grid-area: portrait; width: 70px; height: 70px; justify-self: center; align-self: center; border: 2px solid var(--or); border-radius: 8px; overflow: hidden; background: none !important; box-shadow: none; padding: 0; }
-  #student-portrait { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
-  #left-answers { grid-area: left; display: flex !important; flex-direction: column; gap: 4px; min-height: 0; width: auto !important; min-width: 0 !important; }
-  #right-answers { grid-area: right; display: flex !important; flex-direction: column; gap: 4px; min-height: 0; width: auto !important; min-width: 0 !important; }
-  .answer-button { flex: 1 1 0px !important; font-size: 0.8em; padding: 4px 5px; box-shadow: 0 2px #000; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 0 !important; width: 100%; }
+  #question-box { min-height: 0 !important; font-size: 0.85em; padding: 7px 10px; border-radius: 8px; margin: 0; flex-shrink: 0; }
+  #mobile-btn-row .answer-button { flex: 1 !important; min-height: 0 !important; font-size: 0.8em; padding: 4px 5px; display: flex; align-items: center; justify-content: center; text-align: center; width: 100%; }
   #abandon-button { bottom: 8px; left: 8px; padding: 7px 10px; font-size: 0.75em; }
   .sub-btn { width: 90%; }
   #feedback-message { font-size: 0.9em; padding: 12px; }
@@ -86,7 +80,7 @@
     </style>
 </head>
 <body>
-    <div id="signature-overlay">By M. Esposito</div>
+    <div id="signature-overlay">By M. Esposito · v8</div>
     <div id="vignette-overlay"></div>
     <audio id="audio-menu" loop></audio><audio id="audio-tres-heureux" loop></audio><audio id="audio-heureux" loop></audio><audio id="audio-neutre" loop></audio><audio id="audio-inquiet" loop></audio><audio id="audio-desespere" loop></audio><audio id="audio-game-over" loop></audio><audio id="audio-bonus" loop></audio><audio id="sound-correct"></audio><audio id="sound-incorrect"></audio>
 
@@ -792,7 +786,7 @@
             if(levelKey.endsWith(".4")){ const p=levelKey.charAt(0); currentQuestionPool=[...(QUESTION_BANKS[p+".1"]||[]),...(QUESTION_BANKS[p+".2"]||[]),...(QUESTION_BANKS[p+".3"]||[])]; } else { currentQuestionPool=QUESTION_BANKS[levelKey]||[]; } 
             if(!currentQuestionPool || currentQuestionPool.length===0){ alert("Ce chapitre est vide !"); return; } 
             
-            document.getElementById('start-screen-container').style.display='none'; document.getElementById('level-indicator').textContent=levelName; document.getElementById('game-title').style.display='none'; document.getElementById('score-box').style.display='block'; document.getElementById('pillars-container').style.display='flex'; document.getElementById('game-play-area').style.display='flex'; fixMobileLayout();
+            document.getElementById('start-screen-container').style.display='none'; document.getElementById('level-indicator').textContent=levelName; document.getElementById('game-title').style.display='none'; document.getElementById('score-box').style.display='block'; document.getElementById('pillars-container').style.display='flex'; document.getElementById('game-play-area').style.display='flex'; setupMobileLayout();
             
             const btn = document.getElementById('abandon-button');
             btn.style.display='block';
@@ -879,20 +873,47 @@
         function startBonus(){ gameRunning=false; currentMood=""; playBGM('audio_bonus'); document.getElementById('game-play-area').style.display='none'; document.getElementById('abandon-button').style.display='none'; document.getElementById('bonus-quiz-screen').style.display='flex'; bonusQuestionIndex=0; bonusScore=0; displayBonusQ(); }
         function displayBonusQ(){ if(bonusQuestionIndex>=5){ endBonus(); return; } const q=BONUS_QUESTIONS_VF[Math.floor(Math.random()*BONUS_QUESTIONS_VF.length)]; document.getElementById('bonus-question-text').textContent=q.text; document.getElementById('vf-true-btn').onclick=()=>handleBonusAns(true,q.correct); document.getElementById('vf-false-btn').onclick=()=>handleBonusAns(false,q.correct); document.getElementById('vf-true-btn').disabled=false; document.getElementById('vf-false-btn').disabled=false; document.getElementById('vf-true-btn').className='answer-button bonus-button correct'; document.getElementById('vf-false-btn').className='answer-button bonus-button incorrect'; }
         function handleBonusAns(ans,corr){ if(ans===corr) bonusScore++; setTimeout(()=>{ bonusQuestionIndex++; displayBonusQ(); },500); }
-        function endBonus(){ for(const k in PILLARS)PILLARS[k].health+=20; document.getElementById('bonus-quiz-screen').style.display='none'; document.getElementById('game-play-area').style.display='flex'; document.getElementById('abandon-button').style.display='block'; gameRunning=true; correctAnswersCount=0; updateUI(); continueGame(); fixMobileLayout(); }
+        function endBonus(){ for(const k in PILLARS)PILLARS[k].health+=20; document.getElementById('bonus-quiz-screen').style.display='none'; document.getElementById('game-play-area').style.display='flex'; document.getElementById('abandon-button').style.display='block'; gameRunning=true; correctAnswersCount=0; updateUI(); continueGame(); }
 
-        function fixMobileLayout() {
+        function setupMobileLayout() {
             if (window.innerWidth > 700) return;
-            requestAnimationFrame(function() {
-                var gpa = document.getElementById('game-play-area');
-                var qb = document.getElementById('question-box');
-                var mc = document.getElementById('main-content');
-                if (!gpa || !qb || !mc) return;
-                var gpaH = gpa.getBoundingClientRect().height;
-                var qbH = qb.getBoundingClientRect().height;
-                var h = gpaH - qbH - 8;
-                if (h > 0) mc.style.height = h + 'px';
-            });
+            if (document.getElementById('mobile-btn-row')) return;
+            var gpa = document.getElementById('game-play-area');
+            var mc  = document.getElementById('main-content');
+            var qb  = document.getElementById('question-box');
+            var pc  = document.getElementById('portrait-container');
+            var la  = document.getElementById('left-answers');
+            var ra  = document.getElementById('right-answers');
+            // question-box appears first via order
+            qb.style.order = '-1';
+            qb.style.flexShrink = '0';
+            // game-play-area : flex column, fills space
+            gpa.style.display = 'flex';
+            gpa.style.flexDirection = 'column';
+            gpa.style.flex = '1 1 0';
+            gpa.style.minHeight = '0';
+            gpa.style.overflow = 'hidden';
+            gpa.style.gap = '4px';
+            // main-content : flex column, fills remaining space
+            mc.style.display = 'flex';
+            mc.style.flexDirection = 'column';
+            mc.style.alignItems = 'stretch';
+            mc.style.flex = '1 1 0';
+            mc.style.minHeight = '0';
+            mc.style.overflow = 'hidden';
+            mc.style.gap = '4px';
+            // portrait : small square, centered, fixed height
+            pc.style.cssText = 'width:80px;height:80px;flex-shrink:0;align-self:center;border:2px solid #FFD700;border-radius:8px;overflow:hidden;background:none;box-shadow:none;padding:0;';
+            document.getElementById('student-portrait').style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:6px;';
+            // create a row that holds both answer columns side by side
+            var row = document.createElement('div');
+            row.id = 'mobile-btn-row';
+            row.style.cssText = 'display:flex;flex-direction:row;gap:4px;flex:1 1 0;min-height:0;overflow:hidden;';
+            la.style.cssText = 'display:flex;flex-direction:column;gap:4px;flex:1 1 0;min-height:0;min-width:0;width:auto;';
+            ra.style.cssText = 'display:flex;flex-direction:column;gap:4px;flex:1 1 0;min-height:0;min-width:0;width:auto;';
+            mc.appendChild(row);
+            row.appendChild(la);
+            row.appendChild(ra);
         }
     </script>
 </body>
